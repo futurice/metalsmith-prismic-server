@@ -1,0 +1,26 @@
+{
+  "name": "metalsmith-prismic-server",
+  "version": "0.0.1",
+  "description": "server to compile and preview static sites from prismic.io content",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/futurice/metalsmith-prismic-server.git"
+  },
+  "author": "ds300",
+  "license": "todo",
+  "bugs": {
+    "url": "https://github.com/futurice/metalsmith-prismic-server/issues"
+  },
+  "homepage": "https://github.com/futurice/metalsmith-prismic-server#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "prismic.io": "^2.0.1",
+    "promise": "^7.1.1",
+    "yargs": "^4.1.0"
+  }
+}
