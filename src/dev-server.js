@@ -6,7 +6,6 @@ const metalsmithExpress = require('metalsmith-express');
 const open = require('open');
 const fs = require('fs');
 const path = require('path');
-const _ = require('lodash');
 
 const DEAFULT_CONFIG = {
   port: 3000,
@@ -32,16 +31,15 @@ function dev(config) {
       paths: config.watchPaths,
       livereload: config.liveReloadPort,
     }))
-    .destination(path.join(smith.directory(), 'builds', 'dev'))
+    .destination(path.join(smith.directory(), 'builds'))
     .build(err => {
       if (err) {
         throw err;
+      } else if (config.open) {
+        config.open = false;
+        open('http://localhost:' + config.port + "/");
       }
     });
-
-  if (config.open) {
-    setTimeout(() => open('http://localhost:' + config.port + "/"), 1000);
-  }
 }
 
 module.exports = dev;
