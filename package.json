@@ -19,8 +19,13 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
+    "lodash": "^4.5.1",
+    "metalsmith": "^2.1.0",
+    "metalsmith-express": "^0.1.0",
+    "metalsmith-prismic": "^0.10.0",
+    "metalsmith-serve": "0.0.7",
+    "metalsmith-watch": "^1.0.1",
     "prismic.io": "^2.0.1",
-    "promise": "^7.1.1",
-    "yargs": "^4.1.0"
+    "promise": "^7.1.1"
   }
 }
