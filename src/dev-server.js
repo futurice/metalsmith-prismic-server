@@ -31,7 +31,7 @@ function dev(config) {
       paths: config.watchPaths,
       livereload: config.liveReloadPort,
     }))
-    .destination(path.join(smith.directory(), 'builds'))
+    .destination(path.join(config.buildPath, 'dev'))
     .build(err => {
       if (err) {
         throw err;

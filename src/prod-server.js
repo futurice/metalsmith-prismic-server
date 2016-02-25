@@ -1,7 +1,18 @@
+'use strict';
+
 const express = require('express');
 const metalsmith = require('./metalsmith');
 const bodyParser = require('body-parser');
 const path = require('path');
+const http = require('http');
+const request = require('request');
+const replace = require('./metalsmith-replace');
+const sha1 = require('crypto').createHash('sha1');
+
+const PRISMIC_SCRIPT =
+  `<script async
+           type="text/javascript"
+           src="//static.cdn.prismic.io/prismic.min.js"></script>\n`;
 
 const DEAFULT_CONFIG = {
   port: 3000,
@@ -19,6 +30,15 @@ function prod(config) {
   preview(app, config);
 
   app.listen(config.port);
+
+  // do initial build
+  request.post({
+    url: `http://localhost:${config.port}/build`,
+    json: {
+      apiUrl: config.prismicUrl,
+      secret: config.prismicSecret
+    }
+  });
 }
 
 function reject(response, message) {
@@ -27,8 +47,8 @@ function reject(response, message) {
 }
 
 function build(app, config) {
-  const smith = metalsmith(config);
-  smith.destination(path.join(config.buildPath, "master"));
+  const smith = metalsmith(config)
+    .destination(path.join(config.buildPath, "master"));
 
   app.post('/build', (req, res) => {
     // authenticate api url and webhook secret
@@ -43,7 +63,7 @@ function build(app, config) {
           reject(res, "compilation error");
           // should this throw err?
         } else {
-          cconsole.log("Build complete");
+          console.log("Build complete");
           res.status(200).end();
         }
       });
@@ -51,8 +71,63 @@ function build(app, config) {
   });
 }
 
+let previewCleanupInterval = null;
+
 function preview(app, config) {
   app.get('/preview', (req, res) => {
+    const token = req.query.token;
+    const hash = sha1.digest(token);
 
+    const htmlFilter = replace.filenameExtensionFilter('html');
+
+    metalsmith(config)
+      .destination(path.join(
+        config.buildPath,
+        'preview',
+        hash
+      ))
+      .use(replace.replace(
+        /href="\//g,
+        `href=\"/builds/preview/${hash}/`,
+        htmlFilter
+      ))
+      .use(replace.replace(
+        /<\/body>/g,
+        PRISMIC_SCRIPT + '</body>',
+        htmlFilter
+      ))
+      .build(err => {
+        if (err) {
+          if (err.message.startsWith('Unexpected status code [404]')) {
+            res.status(404).end();
+          } else {
+            console.error(err);
+            res.status(500).end();
+          }
+        } else {
+          console.log('Preview built: ', hash);
+
+          prismicApi.then(api => {
+            api.previewSession(
+              token,
+              config.prismicLinkResolver,
+              '/',
+              (err, redirectUrl) => {
+                if (err) {
+                  console.error(err);
+                }
+                res.cookie('io.prismic.preview', token, {
+                  httpOnly: false,
+                  maxAge: PREVIEW_AGE,
+                  path: `/builds/preview/${hash}`
+                });
+                res.redirect()
+              }
+            );
+          });
+        }
+      });
   });
 }
+
+module.exports = prod;

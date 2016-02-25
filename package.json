@@ -26,6 +26,7 @@
     "metalsmith-serve": "0.0.7",
     "metalsmith-watch": "^1.0.1",
     "prismic.io": "^2.0.1",
-    "promise": "^7.1.1"
+    "promise": "^7.1.1",
+    "request": "^2.69.0"
   }
 }
