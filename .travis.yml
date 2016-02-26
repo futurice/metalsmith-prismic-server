@@ -1,0 +1,11 @@
+language: node
+node_js:
+- '5.7'
+deploy:
+  provider: npm
+  email: metalsmith-prismic@futurice.com
+  api_key:
+    secure: BmjecvFvdEeioAbyC+kDGg2s1f7sptkG3vPBQrwAgJ9h8/XVf9xtU9ZVKd1fvfo1HktUJ2u/OmvWDObhQZfYqT8AbbGoZr4FEpzUpGXDq/0Z0SI0ZC/7wK/RKZaLnfIfnhyif9eHzrJS+dJQtvt6SnG1AuvM7wAo5i0ZdKeCJy47YBU3AuOoHgvy9jw8RHv/GIE/1p35WZ1Um5fh419bT5ZOhaj3wascvA9q+wnIuHUSpFqddfl/yRy0gCwoIWPHt5ZbfRW70jDsIvum1T370K/JyuutBB2NVfGQpcsYXXqq4U8tlbzgnVJF0XbG+44yCMM07YM1W4IgOMbLRShJhdlfzvlcjtTtyvfTQCnW2ADRhS0lZZTzbmz3XyrgQR2nWGL+rv6QVmoT+aJ/MC68cehaZr11HdVSy3z20c0Dwv0qcYPa/33VFJNBSV81q5pRY1xW8R69pkRFcErB6G+eO743SPjKlWecokkF89cjFrfDQnJwZs73R5xV7r7WX3db8mTQMXsx2+UKiGeIuGtOST297AwyAXQ7d8rZAcAeBW+kYQFlLGNWMrOJ3p7KoVfwtJp86DzwNrjgUZ7fJzZTrEl837zDtCNlkL2rdsXhYGP7uzuhmtUEhr2huxB3fxe8hzoT5Z0XCX/P5LmWiWIMyuJEaEpS7Rk1N80wW74kTBA=
+  on:
+    tags: true
+    repo: futurice/metalsmith-prismic-server
