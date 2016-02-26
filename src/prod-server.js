@@ -8,6 +8,9 @@ const http = require('http');
 const request = require('request');
 const replace = require('./metalsmith-replace');
 const sha1 = require('crypto').createHash('sha1');
+const fs = require('fs');
+
+const PREVIEW_AGE = 1000 * 60 * 60; // an hour
 
 const PRISMIC_SCRIPT =
   `<script async
@@ -74,6 +77,19 @@ function build(app, config) {
 let previewCleanupInterval = null;
 
 function preview(app, config) {
+
+  previewCleanupInterval = setInterval(
+    () => {
+      // need to qualify build path by input path to get direct access to
+      // previews
+      const previewsPath = metalsmith(config)
+        .destination(path.join(config.buildPath, 'preview'))
+        .destination();
+      removeExpiredPreviews(previewsPath);
+    },
+    PREVIEW_AGE / 2
+  );
+
   app.get('/preview', (req, res) => {
     const token = req.query.token;
     const hash = sha1.digest(token);
@@ -107,26 +123,43 @@ function preview(app, config) {
         } else {
           console.log('Preview built: ', hash);
 
-          prismicApi.then(api => {
-            api.previewSession(
-              token,
-              config.prismicLinkResolver,
-              '/',
-              (err, redirectUrl) => {
-                if (err) {
-                  console.error(err);
+          Prismic.api(config.prismicUrl, (err, api) => {
+            if (err) {
+              console.error(err);
+              res.status(500).end();
+            } else {
+              api.previewSession(
+                token,
+                config.prismicLinkResolver,
+                '/',
+                (err, redirectUrl) => {
+                  if (err) {
+                    console.error(err);
+                  }
+                  res.cookie('io.prismic.preview', token, {
+                    httpOnly: false,
+                    maxAge: PREVIEW_AGE,
+                    path: `/builds/preview/${hash}`
+                  });
+                  res.redirect(redirectUrl);
                 }
-                res.cookie('io.prismic.preview', token, {
-                  httpOnly: false,
-                  maxAge: PREVIEW_AGE,
-                  path: `/builds/preview/${hash}`
-                });
-                res.redirect()
-              }
-            );
-          });
+              );
+            }
+          }, config.prismicToken);
         }
       });
+  });
+}
+
+function removeExpiredPreviews(dir) {
+  fs.readDirSync(dir).forEach(previewName => {
+    const previewPath = path.join(dir, previewName);
+    const lastModified = fs.statSync(previewPath).mtime;
+    if (lastModified < Date.now() - PREVIEW_AGE) {
+      fs.rmdir(previewPath, () => {
+        console.log(`preview ${previewName} expired and removed`);
+      });
+    }
   });
 }
 
