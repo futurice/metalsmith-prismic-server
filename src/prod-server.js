@@ -10,8 +10,6 @@ const replace = require('./metalsmith-replace');
 const sha1 = require('crypto').createHash('sha1');
 const fs = require('fs');
 
-const PREVIEW_AGE = 1000 * 60 * 60; // an hour
-
 const PRISMIC_SCRIPT =
   `<script async
            type="text/javascript"
@@ -19,7 +17,8 @@ const PRISMIC_SCRIPT =
 
 const DEAFULT_CONFIG = {
   port: 3000,
-  buildPath: "./builds"
+  buildPath: "./builds",
+  previewAge: 1000 * 60 * 60, //an hour
 };
 
 function prod(config) {
@@ -87,7 +86,7 @@ function preview(app, config) {
         .destination();
       removeExpiredPreviews(previewsPath);
     },
-    PREVIEW_AGE / 2
+    config.previewAge / 2
   );
 
   app.get('/preview', (req, res) => {
@@ -138,7 +137,7 @@ function preview(app, config) {
                   }
                   res.cookie('io.prismic.preview', token, {
                     httpOnly: false,
-                    maxAge: PREVIEW_AGE,
+                    maxAge: config.previewAge,
                     path: `/builds/preview/${hash}`
                   });
                   res.redirect(redirectUrl);
@@ -155,7 +154,7 @@ function removeExpiredPreviews(dir) {
   fs.readDirSync(dir).forEach(previewName => {
     const previewPath = path.join(dir, previewName);
     const lastModified = fs.statSync(previewPath).mtime;
-    if (lastModified < Date.now() - PREVIEW_AGE) {
+    if (lastModified < Date.now() - config.previewAge) {
       fs.rmdir(previewPath, () => {
         console.log(`preview ${previewName} expired and removed`);
       });
