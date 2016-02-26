@@ -7,15 +7,7 @@ const open = require('open');
 const fs = require('fs');
 const path = require('path');
 
-const DEAFULT_CONFIG = {
-  port: 3000,
-  liveReloadPort: 3001,
-  open: true,
-  buildPath: "./build",
-  watchPaths: {
-    'src/**/*': true
-  },
-};
+const DEAFULT_CONFIG = require('./config');
 
 function dev(config) {
   config = Object.assign({}, DEAFULT_CONFIG, config);

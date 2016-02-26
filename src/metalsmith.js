@@ -1,18 +1,7 @@
 const metalsmith = require('metalsmith');
 const prismic = require('metalsmith-prismic');
-const env = require('process').env;
-
-const DEFAULT_CONFIG = {
-  plugins: [],
-  inputPath: "./",
-  prismicUrl: env.PRISMIC_URL,
-  prismicToken: env.PRISMIC_TOKEN,
-  release: 'master',
-  linkResolver: null // required
-};
 
 function metalsmithPrismic (config) {
-  config = Object.assign({}, DEFAULT_CONFIG, config);
 
   const smith = metalsmith(config.inputPath)
     .use(prismic({

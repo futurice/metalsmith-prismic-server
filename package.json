@@ -4,7 +4,7 @@
   "description": "server to compile and preview static sites from prismic.io content",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node node_modules/mocha/bin/mocha test"
   },
   "repository": {
     "type": "git",
@@ -27,5 +27,9 @@
     "prismic.io": "^2.0.1",
     "promise": "^7.1.1",
     "request": "^2.69.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
   }
 }

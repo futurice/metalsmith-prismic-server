@@ -15,11 +15,7 @@ const PRISMIC_SCRIPT =
            type="text/javascript"
            src="//static.cdn.prismic.io/prismic.min.js"></script>\n`;
 
-const DEAFULT_CONFIG = {
-  port: 3000,
-  buildPath: "./builds",
-  previewAge: 1000 * 60 * 60, //an hour
-};
+const DEAFULT_CONFIG = require('./config');
 
 function prod(config) {
   config = Object.assign({}, DEAFULT_CONFIG, config);
