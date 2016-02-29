@@ -124,6 +124,7 @@ function previewRoute(app, config) {
               console.error(err);
               res.status(500).end();
             } else {
+              console.log("preview Session")
               api.previewSession(
                 token,
                 config.prismicLinkResolver,
@@ -132,6 +133,7 @@ function previewRoute(app, config) {
                   if (err) {
                     console.error(err);
                   }
+                  console.log("setting cookie")
                   res.cookie('io.prismic.preview', token, {
                     httpOnly: false,
                     maxAge: config.previewAge,
