@@ -25,8 +25,8 @@ function prod(config) {
   app.use(bodyParser.json())
   app.use('/builds', express.static(config.buildPath));
 
-  build(app, config);
-  preview(app, config);
+  buildRoute(app, config);
+  previewRoute(app, config);
 
   app.listen(config.port);
 
@@ -45,7 +45,7 @@ function reject(response, message) {
   response.status(400).end();
 }
 
-function build(app, config) {
+function buildRoute(app, config) {
   app.post('/build', (req, res) => {
     // authenticate api url and webhook secret
     if (config.prismicSecret !== req.body.secret) {
@@ -69,7 +69,7 @@ function build(app, config) {
 
 let previewCleanupInterval = null;
 
-function preview(app, config) {
+function previewRoute(app, config) {
 
   previewCleanupInterval = setInterval(
     () => {
