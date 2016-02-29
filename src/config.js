@@ -4,7 +4,7 @@ module.exports = {
   /**
    * The port to run the server on
    */
-  port: 3000,
+  port: env.PORT,
 
   /**
    * The port to host the liveReload js file and service on. (dev server only)
