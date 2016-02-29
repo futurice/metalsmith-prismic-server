@@ -141,7 +141,9 @@ function previewRoute(app, config) {
                   });
                   res.redirect(302, `/builds/preview/${hash}/${redirectUrl}`);
                 }
-              );
+              ).then(blah => {
+                console.log("stuff");
+              });
             }
           }, config.prismicToken);
         }
