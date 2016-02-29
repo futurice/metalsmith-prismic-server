@@ -10,6 +10,7 @@ const replace = require('./metalsmith-replace');
 const crypto = require('crypto');
 const fs = require('fs');
 const build = require('./build');
+const Prismic = require('prismic.io');
 
 const PRISMIC_SCRIPT =
   `<script async
