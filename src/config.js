@@ -44,7 +44,24 @@ module.exports = {
   /**
    * Plugins for metalsmith
    */
-  plugins: [],
+  plugins: {
+    /**
+     * Plugins used by all pipelines
+     */
+    common: [],
+    /**
+     * Plugins only used for the dev server pipeline
+     */
+    dev: [],
+    /**
+     * plugins only used for the build task of the prod server
+     */
+    build: [],
+    /**
+     * plugins only used for the preview task of the prod server
+     */
+    preview: []
+  },
 
   /**
    * Url of prismic repo api
