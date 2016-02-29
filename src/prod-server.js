@@ -124,22 +124,22 @@ function previewRoute(app, config) {
               console.error(err);
               res.status(500).end();
             } else {
-              console.log("preview Session")
+              console.log("preview Session", token)
               api.previewSession(
                 token,
                 config.prismicLinkResolver,
                 '/',
                 (err, redirectUrl) => {
+                  console.log("setting cookie")
                   if (err) {
                     console.error(err);
                   }
-                  console.log("setting cookie")
                   res.cookie('io.prismic.preview', token, {
                     httpOnly: false,
                     maxAge: config.previewAge,
                     path: `/builds/preview/${hash}`
                   });
-                  res.redirect(redirectUrl);
+                  res.redirect(302, `/builds/preview/${hash}/${redirectUrl}`);
                 }
               );
             }
