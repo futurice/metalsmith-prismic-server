@@ -18,9 +18,14 @@ module.exports = {
   open: true,
 
   /**
-   * The root path of the project
+   * The root of the project
    */
-  buildPath: './',
+  inputPath: './',
+
+  /**
+   * The output path of the project (relative to inputPath)
+   */
+  buildPath: 'builds',
 
   /**
    * Specification of files to watch for changes. (dev server only)
@@ -35,11 +40,6 @@ module.exports = {
    * Expiration age of generated previews (in ms, prod server only)
    */
   previewAge: 1000 * 60 * 60,
-
-  /**
-   * The root of the project
-   */
-  inputPath: './',
 
   /**
    * Plugins for metalsmith
