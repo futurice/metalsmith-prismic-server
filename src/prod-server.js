@@ -9,6 +9,7 @@ const request = require('request');
 const replace = require('./metalsmith-replace');
 const sha1 = require('crypto').createHash('sha1');
 const fs = require('fs');
+const build = require('./build');
 
 const PRISMIC_SCRIPT =
   `<script async
@@ -45,9 +46,6 @@ function reject(response, message) {
 }
 
 function build(app, config) {
-  const smith = metalsmith(config, 'build')
-    .destination(path.join(config.buildPath, "master"));
-
   app.post('/build', (req, res) => {
     // authenticate api url and webhook secret
     if (config.prismicSecret !== req.body.secret) {
@@ -55,7 +53,7 @@ function build(app, config) {
     } else if (config.prismicUrl !== req.body.apiUrl) {
       reject(res, "mismatching api url");
     } else {
-      smith.build(err => {
+      build(config, err => {
         if (err) {
           console.error("Build Failed", err);
           reject(res, "compilation error");
