@@ -86,7 +86,9 @@ function previewRoute(app, config) {
 
   app.get('/preview', (req, res) => {
     const token = req.query.token;
-    const hash = crypto.createHash('sha1').digest(token).toString();
+    const hashSum = crypto.createHash('sha1');
+    hashSum.update(token);
+    const hash = hashSum.digest('hex');
 
     const htmlFilter = replace.filenameExtensionFilter('html');
 
