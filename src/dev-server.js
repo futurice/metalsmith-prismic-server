@@ -12,7 +12,7 @@ const DEAFULT_CONFIG = require('./config');
 function dev(config) {
   config = Object.assign({}, DEAFULT_CONFIG, config);
 
-  const smith = metalsmith(config);
+  const smith = metalsmith(config, 'dev');
   smith
     .use(metalsmithExpress({
       port: config.port,

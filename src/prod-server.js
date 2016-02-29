@@ -45,7 +45,7 @@ function reject(response, message) {
 }
 
 function build(app, config) {
-  const smith = metalsmith(config)
+  const smith = metalsmith(config, 'build')
     .destination(path.join(config.buildPath, "master"));
 
   app.post('/build', (req, res) => {
@@ -77,7 +77,7 @@ function preview(app, config) {
     () => {
       // need to qualify build path by input path to get direct access to
       // previews
-      const previewsPath = metalsmith(config)
+      const previewsPath = metalsmith(config, 'preview')
         .destination(path.join(config.buildPath, 'preview'))
         .destination();
       removeExpiredPreviews(previewsPath);
@@ -91,7 +91,7 @@ function preview(app, config) {
 
     const htmlFilter = replace.filenameExtensionFilter('html');
 
-    metalsmith(config)
+    metalsmith(config, 'preview')
       .destination(path.join(
         config.buildPath,
         'preview',

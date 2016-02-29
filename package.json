@@ -24,6 +24,7 @@
     "metalsmith-express": "^0.1.0",
     "metalsmith-prismic": "^0.10.0",
     "metalsmith-watch": "^1.0.1",
+    "open": "0.0.5",
     "prismic.io": "^2.0.1",
     "promise": "^7.1.1",
     "request": "^2.69.0"
