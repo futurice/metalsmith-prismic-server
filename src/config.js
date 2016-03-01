@@ -54,9 +54,13 @@ module.exports = {
      */
     dev: [],
     /**
-     * plugins only used for the build task of the prod server
+     * plugins used when building the master project
      */
     build: [],
+    /**
+     * plugins only used by the live production server
+     */
+    deploy: [],
     /**
      * plugins only used for the preview task of the prod server
      */

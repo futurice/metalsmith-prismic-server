@@ -1,6 +1,6 @@
 {
   "name": "metalsmith-prismic-server",
-  "version": "0.0.15",
+  "version": "0.1.0",
   "description": "server to compile and preview static sites from prismic.io content",
   "main": "index.js",
   "scripts": {
@@ -22,10 +22,10 @@
     "lodash": "^4.5.1",
     "metalsmith": "^2.1.0",
     "metalsmith-express": "^0.1.0",
-    "metalsmith-prismic": "^0.10.0",
+    "metalsmith-prismic": "git://github.com/aeirola/metalsmith-prismic.git",
     "metalsmith-watch": "^1.0.1",
     "open": "0.0.5",
-    "prismic.io": "git://github.com/ds300/javascript-kit.git#master",
+    "prismic.io": "^2.1.1",
     "promise": "^7.1.1",
     "request": "^2.69.0"
   },

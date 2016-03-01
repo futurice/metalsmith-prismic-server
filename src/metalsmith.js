@@ -1,21 +1,27 @@
 const metalsmith = require('metalsmith');
 const prismic = require('metalsmith-prismic');
 
-function metalsmithPrismic (config, mode) {
+function metalsmithPrismic (config, modes) {
 
   const smith = metalsmith(config.inputPath)
     .use(prismic({
       url: config.prismicUrl,
       accessToken: config.prismicToken,
       release: config.release,
-      linkResolver: config.linkResolver
+      linkResolver: config.prismicLinkResolver
     }));
 
   const commonPlugins = config.plugins.common || [];
-  const modePlugins = config.plugins[mode] || [];
 
   commonPlugins.forEach(smith.use.bind(smith));
-  modePlugins.forEach(smith.use.bind(smith));
+  if (typeof modes === 'string') {
+    modes = [modes];
+  }
+  modes
+    // get plugin objects
+    .map(m => config.plugins[m] || [])
+    // use them
+    .forEach(plugins => plugins.forEach(smith.use.bind(smith)));
 
   return smith;
 };

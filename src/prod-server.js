@@ -54,7 +54,7 @@ function buildRoute(app, config) {
     } else if (config.prismicUrl !== req.body.apiUrl) {
       reject(res, "mismatching api url");
     } else {
-      build(config, err => {
+      build(config, ['build', 'deploy'], err => {
         if (err) {
           console.error("Build Failed", err);
           reject(res, "compilation error");
