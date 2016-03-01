@@ -92,7 +92,7 @@ function previewRoute(app, config) {
 
     const htmlFilter = replace.filenameExtensionFilter('html');
 
-    const previeConfig = Object.assign({}, config, {release: token});
+    const previewConfig = Object.assign({}, config, {release: token});
 
     metalsmith(previewConfig, 'preview')
       .destination(path.join(
@@ -143,9 +143,7 @@ function previewRoute(app, config) {
                   });
                   res.redirect(302, `/builds/preview/${hash}/${redirectUrl}`);
                 }
-              ).then(blah => {
-                console.log("stuff");
-              });
+              )
             }
           }, config.prismicToken);
         }
