@@ -92,7 +92,9 @@ function previewRoute(app, config) {
 
     const htmlFilter = replace.filenameExtensionFilter('html');
 
-    metalsmith(config, 'preview')
+    const previeConfig = Object.assign({}, config, {release: token});
+
+    metalsmith(previewConfig, 'preview')
       .destination(path.join(
         config.buildPath,
         'preview',
