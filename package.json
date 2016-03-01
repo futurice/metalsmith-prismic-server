@@ -1,10 +1,10 @@
 {
   "name": "metalsmith-prismic-server",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "server to compile and preview static sites from prismic.io content",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node node_modules/mocha/bin/mocha test"
   },
   "repository": {
     "type": "git",
@@ -19,8 +19,18 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
-    "prismic.io": "^2.0.1",
+    "lodash": "^4.5.1",
+    "metalsmith": "^2.1.0",
+    "metalsmith-express": "^0.1.0",
+    "metalsmith-prismic": "git://github.com/aeirola/metalsmith-prismic.git",
+    "metalsmith-watch": "^1.0.1",
+    "open": "0.0.5",
+    "prismic.io": "^2.1.1",
     "promise": "^7.1.1",
-    "yargs": "^4.1.0"
+    "request": "^2.69.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
   }
 }

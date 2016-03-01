@@ -1,0 +1,4 @@
+test/
+.travis.yml
+
+# other stuff covered by .gitignore
