@@ -24,6 +24,8 @@ See [src/config.js](src/config.js) for the full list and descriptions of availab
 
 You should specify these options in a plain javascript object which should be passed to any of the top-level functions.
 
+The minimum required options are: `port`, `prismicUrl`, `prismicToken`, `prismicSecret` (for production mode), and `prismicLinkResolver`. All except `prismicLinkResolver` should probably be configured by environment variables.
+
 ### API
 
 #### `prod(config)`
@@ -43,7 +45,7 @@ It also serves the latest master build at `/builds/master`.
 
 #### `dev(config)`
 
-Runs the local development server.
+Runs the local development server, opening the root page in a browser (by default. This behaviour can be switched off via the config object).
 
 #### `build(config, modes)`
 
