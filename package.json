@@ -22,7 +22,7 @@
     "lodash": "^4.5.1",
     "metalsmith": "^2.1.0",
     "metalsmith-express": "^0.1.0",
-    "metalsmith-prismic": "git://github.com/aeirola/metalsmith-prismic.git",
+    "metalsmith-prismic": "git://github.com/aeirola/metalsmith-prismic.git#fragment-url",
     "metalsmith-watch": "^1.0.1",
     "open": "0.0.5",
     "prismic.io": "^2.1.1",
