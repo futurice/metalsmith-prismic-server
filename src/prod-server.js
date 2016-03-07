@@ -11,6 +11,8 @@ const crypto = require('crypto');
 const fs = require('fs');
 const build = require('./build');
 const Prismic = require('prismic.io');
+const removeOldDirs = require('./remove-old-dirs');
+
 
 const PRISMIC_SCRIPT =
   `<script async
@@ -77,7 +79,9 @@ function previewRoute(app, config) {
       const previewsPath = metalsmith(config, 'preview')
         .destination(path.join(config.buildPath, 'preview'))
         .destination();
-      removeExpiredPreviews(previewsPath);
+      removeOldDirs(previewsPath, config.previewAge, previewPath => {
+        console.log(`preview expired and removed: ${previewPath}`);
+      });
     },
     config.previewAge / 2
   );
@@ -154,16 +158,5 @@ function previewRoute(app, config) {
   });
 }
 
-function removeExpiredPreviews(dir) {
-  fs.readDirSync(dir).forEach(previewName => {
-    const previewPath = path.join(dir, previewName);
-    const lastModified = fs.statSync(previewPath).mtime;
-    if (lastModified < Date.now() - config.previewAge) {
-      fs.rmdir(previewPath, () => {
-        console.log(`preview ${previewName} expired and removed`);
-      });
-    }
-  });
-}
 
 module.exports = prod;
