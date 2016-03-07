@@ -4,7 +4,7 @@ module.exports = {
   /**
    * The port to run the server on
    */
-  port: env.PORT,
+  port: env.PORT || 3000,
 
   /**
    * The port to host the liveReload js file and service on. (dev server only)
@@ -15,7 +15,7 @@ module.exports = {
    * whether or not to open a browser on the local machine on startup. (dev
    * server only)
    */
-  open: true,
+  open: env.OPEN_BROWSER === 'true' || !env.OPEN_BROWSER,
 
   /**
    * The root of the project
@@ -88,8 +88,9 @@ module.exports = {
   release: 'master',
 
   /**
-   * link resolver (see: https://prismic.io/docs/link-resolver#?lang=node)
-   * (required)
+   * link resolver (see: https://prismic.io/docs/link-resolver#?lang=node
+   * and https://github.com/mbanting/metalsmith-prismic)
+   * (optional)
    */
   linkResolver: null,
 };

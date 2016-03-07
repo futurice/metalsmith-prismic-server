@@ -23,7 +23,7 @@ function prod(config) {
   config = Object.assign({}, DEAFULT_CONFIG, config);
 
   const app = express();
-  app.use(bodyParser.json())
+  app.use(bodyParser.json());
   app.use('/builds', express.static(config.buildPath));
 
   buildRoute(app, config);
