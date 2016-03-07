@@ -1,6 +1,6 @@
 {
   "name": "metalsmith-prismic-server",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "server to compile and preview static sites from prismic.io content",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,8 @@
     "open": "0.0.5",
     "prismic.io": "^2.1.1",
     "promise": "^7.1.1",
-    "request": "^2.69.0"
+    "request": "^2.69.0",
+    "rimraf": "^2.5.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
