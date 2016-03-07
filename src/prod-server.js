@@ -148,7 +148,11 @@ function previewRoute(app, config) {
                     maxAge: config.previewAge,
                     path: `/builds/preview/${hash}`
                   });
-                  res.redirect(302, `/builds/preview/${hash}/${redirectUrl}`);
+                  let qualified = `/builds/preview/${hash}/`;
+                  if (redirectUrl) {
+                    qualified += redirectUrl;
+                  }
+                  res.redirect(302, qualified);
                 }
               )
             }
