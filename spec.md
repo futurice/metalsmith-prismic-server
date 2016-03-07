@@ -10,11 +10,11 @@ The server has two mutually-exclusive modes:
 
 - Development
 
-  Intended for local use by a person developing templates for a client's site. Watches the input files in the local file system for changes and builds the site to some directory also on the local file system, which is served locally over http. Does not react to changes in prismic content automatically (having prismic ping one's local dev machine is not really feasible.
+  Intended for local use by a person developing templates for a client's site. Watches the input files in the local file system for changes and builds the site to some directory also on the local file system, which is served locally over http. Does not react to changes in prismic content automatically (having prismic ping one's local dev machine is not really feasible).
 
 
 ## Medium Level Details
-### Developement Server
+### Development Server
 
 Builds the site on startup, pulling in the latest content from prismic.
 

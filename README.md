@@ -26,6 +26,8 @@ You should specify these options in a plain javascript object which should be pa
 
 ### API
 
+See `spec.md` for a more detailed explanation.
+
 #### `prod(config)`
 
 Runs the production server which has two endpoints:
