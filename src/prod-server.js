@@ -54,14 +54,14 @@ function buildRoute(app, config) {
     } else if (config.prismicUrl !== req.body.apiUrl) {
       reject(res, "mismatching api url");
     } else {
+      // complete immediately to avoid timeouts
+      res.status(202).end();
+
       build(config, ['build', 'deploy'], err => {
         if (err) {
           console.error("Build Failed", err);
-          reject(res, "compilation error");
-          // should this throw err?
         } else {
           console.log("Build complete");
-          res.status(200).end();
         }
       });
     }
