@@ -6,7 +6,11 @@ function build(config, modes, cb) {
   config = Object.assign({}, DEFAULT_CONFIG, config);
   metalsmith(config, modes)
     .destination(path.join(config.buildPath, "master"))
-    .build(cb);
+    .build(cb || (err => {
+      if (err) {
+        throw err;
+      }
+    }));
 }
 
 module.exports = build;
