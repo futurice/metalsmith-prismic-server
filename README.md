@@ -47,6 +47,6 @@ It also serves the latest master build at `/builds/master`.
 
 Runs the local development server.
 
-#### `build(config, modes)`
+#### `build(config, modes [, cb])`
 
-Runs the build once only, using the given modes (which should be an array of strings which correspond to properties in config.plugins)
+Runs the build once only, using the given modes (which should be an array of strings which correspond to properties in config.plugins). Optionally, a callback can be passed which will be invoked when the build is complete. The callback will be passed an error object iff an error occurred during the build.
