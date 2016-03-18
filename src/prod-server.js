@@ -154,7 +154,7 @@ function previewRoute(app, config) {
                 });
                 let qualified = `/builds/preview/${hash}/`;
                 if (redirectUrl) {
-                  qualified += redirectUrl;
+                  qualified = path.join(qualified, redirectUrl);
                 }
                 res.redirect(302, qualified);
               }
