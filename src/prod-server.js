@@ -101,7 +101,7 @@ function previewRoute(app, config) {
 
     const previewConfig = Object.assign({}, config, {release: token});
 
-    metalsmith(previewConfig, 'preview')
+    const smith = metalsmith(previewConfig, 'preview')
       .destination(path.join(
         config.buildPath,
         'preview',
@@ -111,54 +111,58 @@ function previewRoute(app, config) {
         /href="\//g,
         `href=\"/builds/preview/${hash}/`,
         htmlFilter
-      ))
-      .use(replace.replace(
+      ));
+
+    if (hash !== 'master') {
+      smith.use(replace.replace(
         /<\/body>/g,
         PRISMIC_SCRIPT + '</body>',
         htmlFilter
       ))
-      .build(err => {
-        if (err) {
-          if (err.message.startsWith('Unexpected status code [404]')) {
-            res.status(404).end();
-          } else {
+    }
+
+    smith.build(err => {
+      if (err) {
+        if (err.message.startsWith('Unexpected status code [404]')) {
+          res.status(404).end();
+        } else {
+          console.error(err);
+          res.status(500).end();
+        }
+      } else {
+        console.log('Preview built: ', hash);
+
+        Prismic.api(config.prismicUrl, (err, api) => {
+          if (err) {
             console.error(err);
             res.status(500).end();
-          }
-        } else {
-          console.log('Preview built: ', hash);
-
-          Prismic.api(config.prismicUrl, (err, api) => {
-            if (err) {
-              console.error(err);
-              res.status(500).end();
-            } else {
-              console.log("preview Session", token)
-              api.previewSession(
-                token,
-                config.prismicLinkResolver,
-                '/',
-                (err, redirectUrl) => {
-                  console.log("setting cookie")
-                  if (err) {
-                    console.error(err);
-                  }
-                  res.cookie('io.prismic.preview', token, {
-                    httpOnly: false,
-                    maxAge: config.previewAge,
-                    path: `/builds/preview/${hash}`
-                  });
-                  let qualified = `/builds/preview/${hash}/`;
-                  if (redirectUrl) {
-                    qualified += redirectUrl;
-                  }
-                  res.redirect(302, qualified);
+          } else {
+            console.log("preview Session", token)
+            api.previewSession(
+              token,
+              config.prismicLinkResolver,
+              '/',
+              (err, redirectUrl) => {
+                console.log("setting cookie")
+                if (err) {
+                  console.error(err);
                 }
-              )
-            }
-          }, config.prismicToken);
-        }
-      });
+                res.cookie('io.prismic.preview', token, {
+                  httpOnly: false,
+                  maxAge: config.previewAge,
+                  path: `/builds/preview/${hash}`
+                });
+                let qualified = `/builds/preview/${hash}/`;
+                if (redirectUrl) {
+                  qualified += redirectUrl;
+                }
+                res.redirect(302, qualified);
+              }
+            )
+          }
+        }, config.prismicToken);
+      }
+    });
   });
 }
 
