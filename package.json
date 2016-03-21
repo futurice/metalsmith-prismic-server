@@ -1,6 +1,6 @@
 {
   "name": "metalsmith-prismic-server",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "server to compile and preview static sites from prismic.io content",
   "main": "index.js",
   "scripts": {
