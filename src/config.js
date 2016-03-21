@@ -1,4 +1,5 @@
 const env = require('process').env;
+const prismic = require('metalsmith-prismic');
 
 module.exports = {
   /**
@@ -93,4 +94,9 @@ module.exports = {
    * (optional)
    */
   linkResolver: null,
+
+  /**
+   * Metalsmith prismic plugin to use
+   */
+   prismic: prismic
 };
