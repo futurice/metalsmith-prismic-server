@@ -1,10 +1,9 @@
 const metalsmith = require('metalsmith');
-const prismic = require('metalsmith-prismic');
 
 function metalsmithPrismic (config, modes) {
 
   const smith = metalsmith(config.inputPath)
-    .use(prismic({
+    .use(config.prismic({
       url: config.prismicUrl,
       accessToken: config.prismicToken,
       release: config.release,
