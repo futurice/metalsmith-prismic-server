@@ -98,5 +98,10 @@ module.exports = {
   /**
    * Metalsmith prismic plugin to use
    */
-   prismic: prismic
+   prismic: prismic,
+
+   /**
+    * Do initial build/deploy when prod server starts.
+    */
+  doInitialBuild: true,
 };
