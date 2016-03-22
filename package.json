@@ -1,6 +1,6 @@
 {
   "name": "metalsmith-prismic-server",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "server to compile and preview static sites from prismic.io content",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/futurice/metalsmith-prismic-server.git"
   },
   "author": "ds300",
-  "license": "todo",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/futurice/metalsmith-prismic-server/issues"
   },

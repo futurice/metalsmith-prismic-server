@@ -24,21 +24,30 @@ const DEAFULT_CONFIG = require('./config');
 function prod(config) {
   config = Object.assign({}, DEAFULT_CONFIG, config);
 
-  const app = express();
-  app.use(bodyParser.json());
-  app.use('/builds', express.static(config.buildPath));
 
-  buildRoute(app, config);
-  previewRoute(app, config);
+  function init() {
+    const app = express();
+    app.use(bodyParser.json());
+    app.use('/builds', express.static(config.buildPath));
 
-  app.listen(config.port);
+    buildRoute(app, config);
+    previewRoute(app, config);
 
-  // do initial build
-  build(config, ['build', 'deploy'], err => {
-    if (err) {
-      throw err;
-    }
-  });
+    app.listen(config.port);
+  }
+
+  if (config.doInitialBuild) {
+    // do initial build
+    build(config, ['build', 'deploy'], err => {
+      if (err) {
+        throw err;
+      } else {
+        init();
+      }
+    });
+  } else {
+    init();
+  }
 }
 
 function reject(response, message) {
