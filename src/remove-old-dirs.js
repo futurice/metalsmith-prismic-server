@@ -10,12 +10,14 @@ const rmdir = require('rimraf');
  * @param age [number] the age threshold over which subdirs should be removed
  */
 module.exports = function (dir, age, cb) {
-  fs.readdirSync(dir).forEach(childDirName => {
-    const qualifiedPath = path.join(dir, childDirName);
-    const lastModified = fs.statSync(qualifiedPath).mtime;
-    if (lastModified < Date.now() - age) {
-      rmdir.sync(qualifiedPath);
-      cb && cb(qualifiedPath);
-    }
-  });
+  if (fs.existsSync(dir)) {
+    fs.readdirSync(dir).forEach(childDirName => {
+      const qualifiedPath = path.join(dir, childDirName);
+      const lastModified = fs.statSync(qualifiedPath).mtime;
+      if (lastModified < Date.now() - age) {
+        rmdir.sync(qualifiedPath);
+        cb && cb(qualifiedPath);
+      }
+    });
+  }
 };
