@@ -91,7 +91,7 @@ function previewRoute(app, config) {
         console.log(`preview expired and removed: ${previewPath}`);
       });
     },
-    config.previewAge / 2
+    config.cleanupInterval
   );
 
   app.get('/preview', (req, res) => {
