@@ -57,11 +57,10 @@ function reject(response, message) {
 
 function buildRoute(app, config) {
   app.post('/build', (req, res) => {
-    // authenticate api url and webhook secret
+    // authenticate webhook secret
     if (config.prismicSecret !== req.body.secret) {
       reject(res, "mismatching secret");
-    } else if (config.prismicUrl !== req.body.apiUrl) {
-      reject(res, "mismatching api url");
+    // API URL check will fail when Prismic CDN is used, so the check is removed
     } else {
       // complete immediately to avoid timeouts
       res.status(202).end();
