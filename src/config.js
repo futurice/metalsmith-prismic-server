@@ -43,6 +43,11 @@ module.exports = {
   previewAge: 1000 * 60 * 60,
 
   /**
+   * time (in ms) between preview cleanups.
+   */
+  cleanupInterval: 1000 * 60 * 60 * 24,
+
+  /**
    * Plugins for metalsmith
    */
   plugins: {
@@ -98,7 +103,7 @@ module.exports = {
   /**
    * Metalsmith prismic plugin to use
    */
-   prismic: prismic,
+  prismic: prismic,
 
    /**
     * Do initial build/deploy when prod server starts.
