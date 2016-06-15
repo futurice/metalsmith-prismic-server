@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/futurice/metalsmith-prismic-server.git"
   },
-  "author": "ds300",
+  "author": "Futurice Ltd",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/futurice/metalsmith-prismic-server/issues"
